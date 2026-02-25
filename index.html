@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>SUVIDHA Kiosk</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+  <div class="title">SUVIDHA</div>
+  <div class="info">
+    <div id="dateTime">--/--/---- --:--:--</div>
+    <button id="langToggle">हिंदी / English</button>
+  </div>
+</header>
+
+<main>
+  <div class="card-container" style="justify-content:center;">
+    <div class="card" style="cursor:pointer; text-align:center;" onclick="location.href='electricity.html'">
+      <h2>Electricity</h2>
+      <div style="font-size:5rem; padding:20px;">🔌</div>
+    </div>
+    <div class="card" style="cursor:pointer; text-align:center;" onclick="location.href='gas.html'">
+      <h2>Gas</h2>
+      <div style="font-size:5rem; padding:20px;">🔥</div>
+    </div>
+    <div class="card" style="cursor:pointer; text-align:center;" onclick="location.href='municipal.html'">
+      <h2>Municipal Services</h2>
+      <div style="font-size:5rem; padding:20px;">🏛️</div>
+    </div>
+  </div>
+  <div style="text-align:center; margin-top:30px; font-size:1.2rem; color:#333;">
+    <p>Contact us: <a href="mailto:suvidha@example.com">suvidha@example.com</a> | Phone: 1800-123-456</p>
+  </div>
+</main>
+
+
+<footer>
+  <div id="ticker">
+    📢 UPDATE: Last date to pay Municipal Tax extended to 31st March |
+    🚨 ALERT: Scheduled power cut in City Center tomorrow from 10 AM to 2 PM |
+    📌 SCHEME: Apply for PM Awas Yojana at your nearest municipal center | 
+    📣 NEW: Gas connection removal/addition now available at kiosk. |
+    📍 INFO: Garbage pickup schedule alternate days by ward.
+  </div>
+</footer>
+
+<script>
+  // live time on all pages
+  function updateClock() {
+    const now=new Date();
+    const opts={year:'numeric',month:'2-digit',day:'2-digit',
+                hour:'2-digit',minute:'2-digit',second:'2-digit'};
+    document.getElementById('dateTime').textContent=now.toLocaleString('en-GB',opts);
+  }
+  setInterval(updateClock,1000);
+  updateClock();
+</script>
+</body>
+</html>

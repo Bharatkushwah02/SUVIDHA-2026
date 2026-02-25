@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>SUVIDHA - Electricity</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header>
+  <div class="title" onclick="location.href='index.html'">SUVIDHA</div>
+  <div class="info">
+    <div id="dateTime">--/--/---- --:--:--</div>
+    <button id="langToggle">हिंदी / English</button>
+  </div>
+</header>
+
+<main>
+  <div class="card-container">
+    <div class="card">
+      <h2>Electricity Services</h2>
+      <button class="btn service" data-service="View Outstanding Bills">View Outstanding Bills</button>
+      <button class="btn payment">Make Payment</button>
+      <button class="btn" id="outageBtn">Report Power Outage</button>
+    </div>
+  </div>
+</main>
+
+<!-- modals same as original -->
+<div id="modalBackdrop" class="modal-backdrop">
+  <div class="modal" id="modalContent">
+    <button class="close-btn" id="modalClose">&times;</button>
+    <h3 id="modalTitle">Enter Consumer ID</h3>
+    <input type="text" id="consumerId" readonly />
+    <div class="num-pad">
+      <button>1</button><button>2</button><button>3</button>
+      <button>4</button><button>5</button><button>6</button>
+      <button>7</button><button>8</button><button>9</button>
+      <button id="clearBtn">C</button><button>0</button><button id="backBtn">&larr;</button>
+    </div>
+    <button class="btn" id="submitId">Submit</button>
+  </div>
+</div>
+
+<div id="qrModal" class="modal-backdrop">
+  <div class="modal">
+    <button class="close-btn" id="qrClose">&times;</button>
+    <h3>Scan to Pay</h3>
+    <div style="background:#eee; width:200px; height:200px; margin:auto; display:flex; align-items:center; justify-content:center;">
+      QR CODE
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div id="ticker">
+    📢 UPDATE: Last date to pay Municipal Tax extended to 31st March |
+    🚨 ALERT: Scheduled power cut in City Center tomorrow from 10 AM to 2 PM |
+    📌 SCHEME: Apply for PM Awas Yojana at your nearest municipal center | 
+    📣 NEW: Gas connection removal/addition now available at kiosk. |
+    📍 INFO: Garbage pickup schedule alternate days by ward.
+  </div>
+</footer>
+
+<script>
+  function updateClock() {
+    const now=new Date();
+    const opts={year:'numeric',month:'2-digit',day:'2-digit',
+                hour:'2-digit',minute:'2-digit',second:'2-digit'};
+    document.getElementById('dateTime').textContent=now.toLocaleString('en-GB',opts);
+  }
+  setInterval(updateClock,1000);
+  updateClock();
+
+  // modal logic (same as main)
+  const backdrop=document.getElementById('modalBackdrop');
+  const qrBackdrop=document.getElementById('qrModal');
+  const consumerInput=document.getElementById('consumerId');
+  const modalTitle=document.getElementById('modalTitle');
+  let lastService = '';
+  function openServiceModal(service) {
+    lastService = service;
+    modalTitle.textContent = service;
+    consumerInput.value='';
+    backdrop.classList.add('active');
+  }
+  function closeServiceModal(){ backdrop.classList.remove('active'); }
+  document.getElementById('modalClose').onclick=closeServiceModal;
+  document.getElementById('qrClose').onclick=()=>qrBackdrop.classList.remove('active');
+
+  document.querySelectorAll('.service').forEach(btn=>{
+    btn.addEventListener('click',()=>openServiceModal(btn.dataset.service));
+  });
+
+  document.getElementById('outageBtn').addEventListener('click',()=>{
+    alert('Thank you. Power outage report received.');
+  });
+
+  document.querySelector('.payment').addEventListener('click',()=>{
+    qrBackdrop.classList.add('active');
+  });
+
+  document.querySelectorAll('.num-pad button').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const v=btn.textContent;
+      if(v==='C') consumerInput.value='';
+      else if(v==='←') consumerInput.value=consumerInput.value.slice(0,-1);
+      else consumerInput.value += v;
+    });
+  });
+  document.getElementById('submitId').addEventListener('click',()=>{
+    if(consumerInput.value==='') return alert('Please enter ID');
+    alert('Submitted ID: ' + consumerInput.value + '\nService: ' + lastService);
+    closeServiceModal();
+  });
+</script>
+</body>
+</html>

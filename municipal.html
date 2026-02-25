@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>SUVIDHA - Municipal Services</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header>
+  <div class="title" onclick="location.href='index.html'">SUVIDHA</div>
+  <div class="info">
+    <div id="dateTime">--/--/---- --:--:--</div>
+    <button id="langToggle">हिंदी / English</button>
+  </div>
+</header>
+
+<main>
+  <div class="card-container">
+    <div class="card">
+      <h2>🧹 Public Complaint Services</h2>
+      <button class="btn service" data-service="Garbage Not Collected">Garbage Not Collected</button>
+      <button class="btn service" data-service="Street Light Not Working">Street Light Not Working</button>
+      <button class="btn service" data-service="Water Leakage">Water Leakage</button>
+      <button class="btn service" data-service="Drainage Blockage">Drainage Blockage</button>
+      <button class="btn service" data-service="Road Damage/Pothole">Road Damage / Pothole</button>
+      <button class="btn service" data-service="Stray Animal Complaint">Stray Animal Complaint</button>
+      <button class="btn service" data-service="Illegal Construction Complaint">Illegal Construction Complaint</button>
+    </div>
+    <div class="card">
+      <h2>🚰 Utility Municipal Services</h2>
+      <button class="btn service" data-service="New Water Connection Apply">New Water Connection Apply</button>
+      <button class="btn service" data-service="Water Connection Transfer">Water Connection Transfer</button>
+      <button class="btn service" data-service="Disconnection Request">Disconnection Request</button>
+      <button class="btn service" data-service="Tanker Booking Request">Tanker Booking Request</button>
+    </div>
+    <div class="card">
+      <h2>📄 Certificate Services</h2>
+      <button class="btn service" data-service="Birth Certificate Apply/Download">Birth Certificate Apply/Download</button>
+      <button class="btn service" data-service="Death Certificate Apply/Download">Death Certificate Apply/Download</button>
+      <button class="btn service" data-service="Marriage Certificate Status">Marriage Certificate Status</button>
+      <button class="btn service" data-service="Income Certificate Status">Income Certificate Status</button>
+    </div>
+    <div class="card">
+      <h2>🏗 Civic Permission Services</h2>
+      <button class="btn service" data-service="Building Plan Approval Status">Building Plan Approval Status</button>
+      <button class="btn service" data-service="Shop License Application">Shop License Application</button>
+      <button class="btn service" data-service="Vendor Registration">Vendor Registration</button>
+      <button class="btn service" data-service="Hawker Permit">Hawker Permit</button>
+    </div>
+    <div class="card">
+      <h2>🏥 Public Health Services</h2>
+      <button class="btn service" data-service="Vaccination Camp Info">Vaccination Camp Info</button>
+      <button class="btn service" data-service="Health Camp Registration">Health Camp Registration</button>
+      <button class="btn service" data-service="Public Toilet Location Info">Public Toilet Location Info</button>
+      <button class="btn service" data-service="Sanitation Drive Info">Sanitation Drive Info</button>
+    </div>
+    <div class="card">
+      <h2>📢 Information Services</h2>
+      <button class="btn info" data-service="Govt Welfare Schemes">Govt Welfare Schemes</button>
+      <button class="btn info" data-service="City Announcements">City Announcements</button>
+      <button class="btn info" data-service="Emergency Alerts">Emergency Alerts</button>
+      <button class="btn info" data-service="Ward Officer Contact Details">Ward Officer Contact Details</button>
+      <button class="btn info" data-service="Garbage Pickup Schedule">Garbage Pickup Schedule</button>
+    </div>
+  </div>
+</main>
+
+<!-- modals -->
+<div id="modalBackdrop" class="modal-backdrop">
+  <div class="modal" id="modalContent">
+    <button class="close-btn" id="modalClose">&times;</button>
+    <h3 id="modalTitle">Enter Consumer ID</h3>
+    <input type="text" id="consumerId" readonly />
+    <div class="num-pad">
+      <button>1</button><button>2</button><button>3</button>
+      <button>4</button><button>5</button><button>6</button>
+      <button>7</button><button>8</button><button>9</button>
+      <button id="clearBtn">C</button><button>0</button><button id="backBtn">&larr;</button>
+    </div>
+    <button class="btn" id="submitId">Submit</button>
+  </div>
+</div>
+
+<footer>
+  <div id="ticker">
+    📢 UPDATE: Last date to pay Municipal Tax extended to 31st March |
+    🚨 ALERT: Scheduled power cut in City Center tomorrow from 10 AM to 2 PM |
+    📌 SCHEME: Apply for PM Awas Yojana at your nearest municipal center | 
+    📣 NEW: Gas connection removal/addition now available at kiosk. |
+    📍 INFO: Garbage pickup schedule alternate days by ward.
+  </div>
+</footer>
+
+<script>
+  function updateClock() {
+    const now=new Date();
+    const opts={year:'numeric',month:'2-digit',day:'2-digit',
+                hour:'2-digit',minute:'2-digit',second:'2-digit'};
+    document.getElementById('dateTime').textContent=now.toLocaleString('en-GB',opts);
+  }
+  setInterval(updateClock,1000);
+  updateClock();
+
+  // modal logic
+  const backdrop=document.getElementById('modalBackdrop');
+  const consumerInput=document.getElementById('consumerId');
+  const modalTitle=document.getElementById('modalTitle');
+  let lastService = '';
+  function openServiceModal(service) {
+    lastService = service;
+    modalTitle.textContent = service;
+    consumerInput.value='';
+    backdrop.classList.add('active');
+  }
+  function closeServiceModal(){ backdrop.classList.remove('active'); }
+  document.getElementById('modalClose').onclick=closeServiceModal;
+
+  document.querySelectorAll('.service').forEach(btn=>{
+    btn.addEventListener('click',()=>openServiceModal(btn.dataset.service));
+  });
+
+  // handle informational buttons separately
+  document.querySelectorAll('.info').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      alert('['+btn.dataset.service+']\n\n(Static info would appear here in a real app.)');
+    });
+  });
+
+  document.querySelectorAll('.num-pad button').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const v=btn.textContent;
+      if(v==='C') consumerInput.value='';
+      else if(v==='←') consumerInput.value=consumerInput.value.slice(0,-1);
+      else consumerInput.value += v;
+    });
+  });
+  document.getElementById('submitId').addEventListener('click',()=>{
+    if(consumerInput.value==='') return alert('Please enter ID');
+    const svc = lastService;
+    if (svc.includes('Complaint')) {
+      const cid = 'CMP' + Math.floor(Math.random()*900000 + 100000);
+      alert('Complaint registered\nID: ' + cid + '\nStatus: Pending');
+    } else if (svc.includes('Certificate')) {
+      alert('Checking status for ' + svc + '\n(This is a demo; real API needed.)');
+    } else {
+      alert('Submitted ID: ' + consumerInput.value + '\nService: ' + svc);
+    }
+    closeServiceModal();
+  });
+</script>
+</body>
+</html>
