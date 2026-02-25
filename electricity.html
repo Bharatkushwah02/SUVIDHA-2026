@@ -15,41 +15,115 @@
   </div>
 </header>
 
-<main>
+<main id="mainMenu">
   <div class="card-container">
-    <div class="card">
-      <h2>Electricity Services</h2>
-      <button class="btn service" data-service="View Outstanding Bills">View Outstanding Bills</button>
-      <button class="btn payment">Make Payment</button>
-      <button class="btn" id="outageBtn">Report Power Outage</button>
+    <div class="card" style="cursor:pointer;" id="btnPay">
+      <h2>Pay Electricity Bill</h2>
+      <img src="payelectricitybill.png" alt="Pay Electricity" style="max-width:100%;height:120px;object-fit:contain;margin-top:10px;" />
+    </div>
+    <div class="card" style="cursor:pointer;" id="btnComplaint">
+      <h2>Register Complaint</h2>
+      <img src="registercomplaint.png" alt="Complaint" style="max-width:100%;height:120px;object-fit:contain;margin-top:10px;" />
+    </div>
+    <div class="card" style="cursor:pointer;" id="btnConnection">
+      <h2>Connection Services</h2>
+      <img src="connectionservices.png" alt="Connection" style="max-width:100%;height:120px;object-fit:contain;margin-top:10px;" />
+    </div>
+    <div class="card" style="cursor:pointer;" id="btnEmergency">
+      <h2 class="sos">Emergency Report</h2>
+      <img src="emergencyreport.png" alt="Emergency" style="max-width:100%;height:120px;object-fit:contain;margin-top:10px;" />
     </div>
   </div>
 </main>
 
-<!-- modals same as original -->
-<div id="modalBackdrop" class="modal-backdrop">
-  <div class="modal" id="modalContent">
-    <button class="close-btn" id="modalClose">&times;</button>
-    <h3 id="modalTitle">Enter Consumer ID</h3>
-    <input type="text" id="consumerId" readonly />
-    <div class="num-pad">
-      <button>1</button><button>2</button><button>3</button>
-      <button>4</button><button>5</button><button>6</button>
-      <button>7</button><button>8</button><button>9</button>
-      <button id="clearBtn">C</button><button>0</button><button id="backBtn">&larr;</button>
-    </div>
-    <button class="btn" id="submitId">Submit</button>
+<!-- pay bill screens -->
+<div id="payScreen" class="screen" style="display:none;">
+  <h2>Enter Bill Number</h2>
+  <input id="billNumberInput" type="text" readonly style="font-size:2rem; text-align:center; width:80%;" />
+  <div class="num-pad" style="max-width:300px;margin:auto;">
+    <button>1</button><button>2</button><button>3</button>
+    <button>4</button><button>5</button><button>6</button>
+    <button>7</button><button>8</button><button>9</button>
+    <button id="clearBill">C</button><button>0</button><button id="backBill">&larr;</button>
+  </div>
+  <button class="btn" id="submitBill">Submit</button>
+  <button class="btn" id="cancelPay">Cancel</button>
+</div>
+
+<div id="billDetails" class="screen" style="display:none; padding:20px;">
+  <h2>Bill Details</h2>
+  <div id="detailsArea"></div>
+  <button class="btn" id="proceedPayment">Proceed to Payment</button>
+  <button class="btn" id="backToPay">Back</button>
+</div>
+
+<div id="paymentOptions" class="screen" style="display:none; padding:20px;">
+  <h2>Select Payment Method</h2>
+  <div class="button-row">
+    <button class="btn" id="optQR">Pay via QR Code</button>
+    <button class="btn" id="optCard">Pay via Debit Card</button>
+    <button class="btn" id="optAeps">Pay via Aadhaar Biometric</button>
+  </div>
+  <div class="button-row">
+    <button class="btn" id="cancelPayment">Cancel</button>
   </div>
 </div>
 
-<div id="qrModal" class="modal-backdrop">
-  <div class="modal">
-    <button class="close-btn" id="qrClose">&times;</button>
-    <h3>Scan to Pay</h3>
-    <div style="background:#eee; width:200px; height:200px; margin:auto; display:flex; align-items:center; justify-content:center;">
-      QR CODE
-    </div>
+<!-- complaint screen -->
+<div id="complaintScreen" class="screen" style="display:none; padding:20px;">
+  <h2>Register Complaint</h2>
+  <label>Bill Number</label><br><input id="complaintBill" type="text" style="width:80%;font-size:1.2rem;"><br>
+  <label>Type</label><br>
+  <select id="complaintType" style="width:80%;font-size:1.2rem;">
+    <option>Power Cut</option>
+    <option>Voltage Issue</option>
+    <option>Meter Not Working</option>
+    <option>Wrong Billing</option>
+    <option>Electric Shock Hazard</option>
+  </select><br>
+  <label>Description</label><br>
+  <textarea id="complaintDesc" rows="3" style="width:80%;font-size:1rem;"></textarea><br>
+  <div class="button-row">
+    <button class="btn" id="submitComplaint">Submit</button>
+    <button class="btn" id="cancelComplaint">Cancel</button>
   </div>
+</div>
+
+<!-- connection services -->
+<div id="connectionScreen" class="screen" style="display:none; padding:20px;">
+  <h2>Connection Services</h2>
+  <div class="button-row">
+    <button class="btn" id="connNew">New Connection</button>
+    <button class="btn" id="connMeter">New Meter Installation</button>
+    <button class="btn" id="connDiscon">Disconnection Request</button>
+  </div>
+  <div class="button-row">
+    <button class="btn" id="cancelConnection">Cancel</button>
+  </div>
+</div>
+
+<div id="connForm" class="screen" style="display:none; padding:20px;">
+  <h2 id="connTitle"></h2>
+  <label>Name</label><br><input id="connName" type="text" style="width:80%;font-size:1.2rem;"><br>
+  <label>Address</label><br><input id="connAddress" type="text" style="width:80%;font-size:1.2rem;"><br>
+  <label>Bill Number (if any)</label><br><input id="connBill" type="text" style="width:80%;font-size:1.2rem;"><br>
+  <label>Mobile Number</label><br><input id="connMobile" type="text" style="width:80%;font-size:1.2rem;"><br>
+  <button class="btn" id="submitConn">Submit</button>
+  <button class="btn" id="backConn">Back</button>
+</div>
+
+<!-- emergency screen -->
+<div id="emergencyScreen" class="screen" style="display:none; padding:20px;">
+  <h2>Emergency Report</h2>
+  <button class="btn sos" id="emLiveWire">Report Live Wire</button><br>
+  <button class="btn sos" id="emOutage">Report Area Power Outage</button><br>
+  <button class="btn" id="cancelEmergency">Cancel</button>
+</div>
+
+<div id="emConfirm" class="screen" style="display:none; padding:20px;">
+  <h2>Thank you</h2>
+  <p>Your emergency report has been recorded.</p>
+  <button class="btn" id="backFromEm">Back to menu</button>
 </div>
 
 <footer>
@@ -63,6 +137,7 @@
 </footer>
 
 <script>
+  // live clock
   function updateClock() {
     const now=new Date();
     const opts={year:'numeric',month:'2-digit',day:'2-digit',
@@ -72,47 +147,83 @@
   setInterval(updateClock,1000);
   updateClock();
 
-  // modal logic (same as main)
-  const backdrop=document.getElementById('modalBackdrop');
-  const qrBackdrop=document.getElementById('qrModal');
-  const consumerInput=document.getElementById('consumerId');
-  const modalTitle=document.getElementById('modalTitle');
-  let lastService = '';
-  function openServiceModal(service) {
-    lastService = service;
-    modalTitle.textContent = service;
-    consumerInput.value='';
-    backdrop.classList.add('active');
+  // navigation helpers
+  function showScreen(id) {
+    document.querySelectorAll('.screen, #mainMenu').forEach(el=>el.style.display='none');
+    document.getElementById(id).style.display='block';
+    resetTimer();
   }
-  function closeServiceModal(){ backdrop.classList.remove('active'); }
-  document.getElementById('modalClose').onclick=closeServiceModal;
-  document.getElementById('qrClose').onclick=()=>qrBackdrop.classList.remove('active');
 
-  document.querySelectorAll('.service').forEach(btn=>{
-    btn.addEventListener('click',()=>openServiceModal(btn.dataset.service));
-  });
+  // main menu buttons
+  document.getElementById('btnPay').addEventListener('click',()=> showScreen('payScreen'));
+  document.getElementById('btnComplaint').addEventListener('click',()=> showScreen('complaintScreen'));
+  document.getElementById('btnConnection').addEventListener('click',()=> showScreen('connectionScreen'));
+  document.getElementById('btnEmergency').addEventListener('click',()=> showScreen('emergencyScreen'));
 
-  document.getElementById('outageBtn').addEventListener('click',()=>{
-    alert('Thank you. Power outage report received.');
-  });
-
-  document.querySelector('.payment').addEventListener('click',()=>{
-    qrBackdrop.classList.add('active');
-  });
-
-  document.querySelectorAll('.num-pad button').forEach(btn=>{
+  // pay bill logic
+  const billInput = document.getElementById('billNumberInput');
+  document.querySelectorAll('#payScreen .num-pad button').forEach(btn=>{
     btn.addEventListener('click',()=>{
       const v=btn.textContent;
-      if(v==='C') consumerInput.value='';
-      else if(v==='←') consumerInput.value=consumerInput.value.slice(0,-1);
-      else consumerInput.value += v;
+      if(v==='C') billInput.value='';
+      else if(v==='←') billInput.value=billInput.value.slice(0,-1);
+      else billInput.value+=v;
     });
   });
-  document.getElementById('submitId').addEventListener('click',()=>{
-    if(consumerInput.value==='') return alert('Please enter ID');
-    alert('Submitted ID: ' + consumerInput.value + '\nService: ' + lastService);
-    closeServiceModal();
-  });
+  document.getElementById('submitBill').onclick=()=>{
+    if(!billInput.value) return alert('Enter bill number');
+    // dummy details
+    const details = `<p>Consumer Name: John Doe</p><p>Address: 123 Main St</p>
+      <p>Due Amount: ₹1500</p><p>Due Date: 28/02/2026</p>
+      <p>Last 6 bills: Jan ₹1200, Dec ₹1100, Nov ₹1300, Oct ₹1250, Sep ₹1150, Aug ₹1000</p>`;
+    document.getElementById('detailsArea').innerHTML=details;
+    showScreen('billDetails');
+  };
+  document.getElementById('cancelPay').onclick=()=> showScreen('mainMenu');
+  document.getElementById('backToPay').onclick=()=> showScreen('payScreen');
+  document.getElementById('proceedPayment').onclick=()=> showScreen('paymentOptions');
+  document.getElementById('optQR').onclick=()=> alert('Showing QR code...');
+  document.getElementById('optCard').onclick=()=> alert('Proceed to card entry (not implemented)');
+  document.getElementById('optAeps').onclick=()=> alert('AEPS biometric flow');
+  document.getElementById('cancelPayment').onclick=()=> showScreen('mainMenu');
+
+  // complaint logic
+  document.getElementById('submitComplaint').onclick=()=>{
+    const cid='CMP'+Math.floor(Math.random()*900000+100000);
+    alert('Complaint registered\nID: '+cid+'\nReceipt will be printed');
+    showScreen('mainMenu');
+  };
+  document.getElementById('cancelComplaint').onclick=()=> showScreen('mainMenu');
+
+  // connection services
+  function openConnForm(title){
+    document.getElementById('connTitle').textContent=title;
+    showScreen('connForm');
+  }
+  document.getElementById('connNew').onclick=()=>openConnForm('New Connection');
+  document.getElementById('connMeter').onclick=()=>openConnForm('New Meter Installation');
+  document.getElementById('connDiscon').onclick=()=>openConnForm('Disconnection Request');
+  document.getElementById('cancelConnection').onclick=()=>showScreen('mainMenu');
+  document.getElementById('backConn').onclick=()=>showScreen('connectionScreen');
+  document.getElementById('submitConn').onclick=()=>{
+    alert('Request submitted');
+    showScreen('mainMenu');
+  };
+
+  // emergency
+  document.getElementById('emLiveWire').onclick=()=>showScreen('emConfirm');
+  document.getElementById('emOutage').onclick=()=>showScreen('emConfirm');
+  document.getElementById('cancelEmergency').onclick=()=>showScreen('mainMenu');
+  document.getElementById('backFromEm').onclick=()=>showScreen('mainMenu');
+
+  // inactivity timeout
+  let idleTimer;
+  function resetTimer(){ clearTimeout(idleTimer); idleTimer=setTimeout(()=>showScreen('mainMenu'),60000); }
+  ['click','touchstart'].forEach(evt=>document.addEventListener(evt,resetTimer));
+  resetTimer();
+
+  // start on main
+  showScreen('mainMenu');
 </script>
 </body>
 </html>

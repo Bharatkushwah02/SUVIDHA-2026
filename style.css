@@ -35,6 +35,12 @@ main.landing-main { flex-direction:column; }
 .num-pad button:active { background:#999; }
 #consumerId { width:100%; padding:10px; font-size:1.2rem; text-align:center; margin-bottom:10px; }
 
+/* helper screens */
+.screen { display:none; }
+
+/* rows of buttons */
+.button-row { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:10px 0; }
+
 /* footer ticker */
 footer { position:fixed; bottom:0; left:0; right:0; height:40px; background:#003366; color:#fff; overflow:hidden; z-index:1000; }
 #ticker { white-space:nowrap; display:inline-block; position:absolute; will-change:transform; animation:scroll 40s linear infinite; font-size:1rem; padding-left:100%; }
