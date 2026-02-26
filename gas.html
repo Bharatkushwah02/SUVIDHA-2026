@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-<title>SUVIDHA - Gas</title>
+<title>SUVIDHA - Gas Services</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -15,90 +15,283 @@
   </div>
 </header>
 
-<main>
-  <div class="card-container">
-    <div class="card">
-      <h2>Gas Services (AGCL)</h2>
-      <button class="btn service" data-service="Book LPG Cylinder">Book LPG Cylinder</button>
-      <button class="btn service" data-service="Track Delivery Status">Track Delivery Status</button>
-      <button class="btn service" data-service="Add Gas Connection">Add Gas Connection</button>
-      <button class="btn service" data-service="Remove Gas Connection">Remove Gas Connection</button>
-      <button class="btn sos" id="gasSos">Report Emergency Gas Leak (SOS)</button>
+<main id="mainMenu">
+  <div style="width:100%;padding:20px;">
+    <h2 style="text-align:center;margin-bottom:40px;font-size:2.5rem;">Select Gas Service Type</h2>
+    <div class="card-container" style="justify-content:center;">
+      <div class="card" style="cursor:pointer;width:400px;height:250px;display:flex;align-items:center;justify-content:center;" id="btnSelectPNG">
+        <h1 style="font-size:2rem;color:#0078d4;text-align:center;">🔵<br>PNG - Pipeline Gas</h1>
+      </div>
+      <div class="card" style="cursor:pointer;width:400px;height:250px;display:flex;align-items:center;justify-content:center;" id="btnSelectLPG">
+        <h1 style="font-size:2rem;color:#d32f2f;text-align:center;">🔴<br>LPG Support</h1>
+      </div>
     </div>
   </div>
 </main>
 
-<!-- modals -->
-<div id="modalBackdrop" class="modal-backdrop">
-  <div class="modal" id="modalContent">
-    <button class="close-btn" id="modalClose">&times;</button>
-    <h3 id="modalTitle">Enter Consumer ID</h3>
-    <input type="text" id="consumerId" readonly />
-    <div class="num-pad">
-      <button>1</button><button>2</button><button>3</button>
-      <button>4</button><button>5</button><button>6</button>
-      <button>7</button><button>8</button><button>9</button>
-      <button id="clearBtn">C</button><button>0</button><button id="backBtn">&larr;</button>
-    </div>
-    <button class="btn" id="submitId">Submit</button>
+<div id="pngServiceMenu" class="screen" style="display:none;padding:20px;">
+  <h2 style="text-align:center;margin-bottom:20px;">PNG - Pipeline Gas Services</h2>
+  <div class="card-container">
+    <div class="card" style="cursor:pointer;" id="btnPngNew"><h2>New PNG Connection</h2></div>
+    <div class="card" style="cursor:pointer;" id="btnPngBill"><h2>PNG Bill Payment</h2></div>
+    <div class="card" style="cursor:pointer;" id="btnPngMeter"><h2>Meter Issue</h2></div>
+    <div class="card" style="cursor:pointer;" id="btnPngLeakage"><h2>Leakage Report</h2></div>
+    <div class="card" style="cursor:pointer;" id="btnPngEmerg"><h2 style="color:#d32f2f;">Emergency Shutoff</h2></div>
+    <div class="card" style="cursor:pointer;" id="btnPngRemove"><h2>Remove Connection</h2></div>
   </div>
+  <div class="button-row"><button class="btn" id="backFromPngMenu">Back</button></div>
 </div>
 
-<footer>
-  <div id="ticker">
-    📢 UPDATE: Last date to pay Municipal Tax extended to 31st March |
-    🚨 ALERT: Scheduled power cut in City Center tomorrow from 10 AM to 2 PM |
-    📌 SCHEME: Apply for PM Awas Yojana at your nearest municipal center | 
-    📣 NEW: Gas connection removal/addition now available at kiosk. |
-    📍 INFO: Garbage pickup schedule alternate days by ward.
+<div id="lpgServiceMenu" class="screen" style="display:none;padding:20px;">
+  <h2 style="text-align:center;margin-bottom:20px;">LPG Support Services</h2>
+  <div class="card-container">
+    <div class="card" style="cursor:pointer;" id="btnLpgDelivery"><h2>Delivery Issue</h2></div>
+    <div class="card" style="cursor:pointer;" id="btnLpgOvercharge"><h2>Overcharging</h2></div>
+    <div class="card" style="cursor:pointer;" id="btnLpgDefect"><h2>Cylinder Defect</h2></div>
+    <div class="card" style="cursor:pointer;" id="btnLpgEmerg"><h2 style="color:#d32f2f;">Emergency Leak</h2></div>
+    <div class="card" style="cursor:pointer;" id="btnLpgSafety"><h2>Safety Tips</h2></div>
   </div>
-</footer>
+  <div class="button-row"><button class="btn" id="backFromLpgMenu">Back</button></div>
+</div>
+
+<div id="pngNewForm" class="screen" style="display:none;padding:20px;">
+  <h2>PNG New Connection</h2>
+  <label>Name</label><input id="pngName" type="text" style="width:80%;font-size:1.2rem;"><br>
+  <label>Address</label><input id="pngAddr" type="text" style="width:80%;font-size:1.2rem;"><br>
+  <label>Mobile</label><input id="pngMob" type="text" style="width:80%;font-size:1.2rem;"><br>
+  <div class="button-row"><button class="btn" id="submitPngNew">Submit</button><button class="btn" id="cancelPngNew">Cancel</button></div>
+</div>
+
+<div id="pngBillScreen" class="screen" style="display:none;padding:20px;">
+  <h2>PNG Bill Payment - Enter Consumer ID</h2>
+  <input id="pngConsInput" type="text" readonly style="font-size:2rem;text-align:center;width:80%;" />
+  <div class="num-pad" style="max-width:300px;margin:20px auto;">
+    <button>1</button><button>2</button><button>3</button><button>4</button><button>5</button><button>6</button><button>7</button><button>8</button><button>9</button><button id="pngClear">C</button><button>0</button><button id="pngBack">·</button>
+  </div>
+  <div class="button-row"><button class="btn" id="submitPngCons">Submit</button><button class="btn" id="cancelPngBill">Cancel</button></div>
+</div>
+
+<div id="pngBillDetails" class="screen" style="display:none;padding:20px;">
+  <h2>Bill Details</h2>
+  <div id="pngBillArea"></div>
+  <div class="button-row"><button class="btn" id="proceedPngPay">Continue to Payment</button><button class="btn" id="backPngDetails">Back</button></div>
+</div>
+
+<div id="pngPayOptions" class="screen" style="display:none;padding:20px;">
+  <h2>Pay Bill Via</h2>
+  <div class="button-row"><button class="btn" id="pngQR">QR Code</button><button class="btn" id="pngCard">Debit Card</button><button class="btn" id="pngAEPS">AEPS</button></div>
+  <div class="button-row"><button class="btn" id="cancelPngPay">Cancel</button></div>
+</div>
+
+<div id="pngComplaintForm" class="screen" style="display:none;padding:20px;">
+  <h2 id="pngCompTitle">Report Issue</h2>
+  <label>Consumer ID</label><input id="pngCompCons" type="text" style="width:80%;font-size:1.2rem;"><br>
+  <label>Type</label><select id="pngCompType" style="width:80%;font-size:1.2rem;"><option>Meter Issue</option><option>Leakage</option></select><br>
+  <label>Description</label><textarea id="pngCompDesc" rows="3" style="width:80%;font-size:1rem;"></textarea><br>
+  <div class="button-row"><button class="btn" id="submitPngComp">Submit</button><button class="btn" id="cancelPngComp">Cancel</button></div>
+</div>
+
+<div id="pngEmergScreen" class="screen" style="display:none;padding:20px;text-align:center;">
+  <h2 style="color:#d32f2f;font-size:2rem;">EMERGENCY SHUTOFF</h2>
+  <p style="font-size:1.2rem;">Confirm to report</p>
+  <div class="button-row"><button class="btn sos" id="submitPngEmerg" style="font-size:1.5rem;padding:30px;">CONFIRM</button></div>
+  <div class="button-row"><button class="btn" id="cancelPngEmerg">Cancel</button></div>
+</div>
+
+<div id="pngRemoveForm" class="screen" style="display:none;padding:20px;">
+  <h2>Remove PNG Connection</h2>
+  <label>Consumer ID</label><input id="pngRemoveId" type="text" style="width:80%;font-size:1.2rem;"><br>
+  <label>Reason</label><select id="pngRemoveReason" style="width:80%;font-size:1.2rem;"><option>No longer needed</option><option>Moving</option><option>Other</option></select><br>
+  <div class="button-row"><button class="btn" id="submitPngRemove">Submit</button><button class="btn" id="cancelPngRemove">Cancel</button></div>
+</div>
+
+<div id="lpgDeliveryForm" class="screen" style="display:none;padding:20px;">
+  <h2>Delivery Complaint</h2>
+  <label>Consumer #</label><input id="lpgDeliv" type="text" style="width:80%;font-size:1.2rem;"><br>
+  <label>Issue</label><textarea id="lpgDelivDesc" rows="3" style="width:80%;font-size:1rem;"></textarea><br>
+  <div class="button-row"><button class="btn" id="submitLpgDeliv">Submit</button><button class="btn" id="cancelLpgDeliv">Cancel</button></div>
+</div>
+
+<div id="lpgOverchargeForm" class="screen" style="display:none;padding:20px;">
+  <h2>Overcharging Complaint</h2>
+  <label>Consumer #</label><input id="lpgOverNum" type="text" style="width:80%;font-size:1.2rem;"><br>
+  <label>Amount</label><input id="lpgOverAmt" type="text" style="width:80%;font-size:1.2rem;"><br>
+  <label>Description</label><textarea id="lpgOverDesc" rows="3" style="width:80%;font-size:1rem;"></textarea><br>
+  <div class="button-row"><button class="btn" id="submitLpgOver">Submit</button><button class="btn" id="cancelLpgOver">Cancel</button></div>
+</div>
+
+<div id="lpgDefectForm" class="screen" style="display:none;padding:20px;">
+  <h2>Cylinder Defect Report</h2>
+  <label>Consumer #</label><input id="lpgDefectNum" type="text" style="width:80%;font-size:1.2rem;"><br>
+  <label>Issue</label><select id="lpgDefectType" style="width:80%;font-size:1.2rem;"><option>Dented</option><option>Leaking</option><option>Rusted</option><option>Other</option></select><br>
+  <label>Description</label><textarea id="lpgDefectDesc" rows="3" style="width:80%;font-size:1rem;"></textarea><br>
+  <div class="button-row"><button class="btn" id="submitLpgDefect">Submit</button><button class="btn" id="cancelLpgDefect">Cancel</button></div>
+</div>
+
+<div id="lpgEmergScreen" class="screen" style="display:none;padding:20px;text-align:center;">
+  <h2 style="color:#d32f2f;font-size:2rem;">GAS LEAK EMERGENCY</h2>
+  <p style="font-size:1.2rem;">Confirm to dispatch help</p>
+  <div class="button-row"><button class="btn sos" id="submitLpgEmerg" style="font-size:1.5rem;padding:30px;">CONFIRM</button></div>
+  <div class="button-row"><button class="btn" id="cancelLpgEmerg">Cancel</button></div>
+</div>
+
+<div id="lpgSafetyScreen" class="screen" style="display:none;padding:20px;">
+  <h2>LPG Safety</h2>
+  <div style="border:2px solid #0078d4;padding:15px;background:#f0f8ff;font-size:1.1rem;line-height:2;">
+    <strong>Check for Leak:</strong> Smell for egg odor. Apply soap - bubbles mean leak.<br>
+    <strong>Emergency:</strong> No lights/flames. Evacuate area immediately.<br>
+    <strong>Helpline: 1906</strong> (Available 24/7)
+  </div>
+  <div class="button-row"><button class="btn" id="backFromSafety">Back</button></div>
+</div>
+
+<div id="confirmScreen" class="screen" style="display:none;padding:20px;text-align:center;">
+  <h2>Successfully Submitted</h2>
+  <p id="confirmMsg" style="font-size:1.2rem;margin:20px 0;"></p>
+  <div class="button-row"><button class="btn" id="backFromConfirm">Back to Menu</button></div>
+</div>
+
+<footer><div id="ticker">📢 PNG connections available now | 🚨 Helpline: 1906</div></footer>
 
 <script>
-  function updateClock() {
-    const now=new Date();
-    const opts={year:'numeric',month:'2-digit',day:'2-digit',
-                hour:'2-digit',minute:'2-digit',second:'2-digit'};
-    document.getElementById('dateTime').textContent=now.toLocaleString('en-GB',opts);
-  }
-  setInterval(updateClock,1000);
-  updateClock();
+function updateClock(){
+  const d = new Date();
+  const t = d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0') + ':' + d.getSeconds().toString().padStart(2,'0');
+  const dt = ('0' + d.getDate()).slice(-2) + '/' + ('0' + (d.getMonth()+1)).slice(-2) + '/' + d.getFullYear();
+  document.getElementById('dateTime').textContent = dt + ' ' + t;
+}
+setInterval(updateClock, 1000);
+updateClock();
 
-  // modal logic
-  const backdrop=document.getElementById('modalBackdrop');
-  const consumerInput=document.getElementById('consumerId');
-  const modalTitle=document.getElementById('modalTitle');
-  let lastService = '';
-  function openServiceModal(service) {
-    lastService = service;
-    modalTitle.textContent = service;
-    consumerInput.value='';
-    backdrop.classList.add('active');
-  }
-  function closeServiceModal(){ backdrop.classList.remove('active'); }
-  document.getElementById('modalClose').onclick=closeServiceModal;
+let idleTimer;
+function resetTimer(){
+  clearTimeout(idleTimer);
+  idleTimer = setTimeout(() => showScreen('mainMenu'), 60000);
+}
 
-  document.querySelectorAll('.service').forEach(btn=>{
-    btn.addEventListener('click',()=>openServiceModal(btn.dataset.service));
-  });
+function showScreen(id){
+  document.querySelectorAll('.screen, #mainMenu').forEach(e => e.style.display = 'none');
+  if(id) document.getElementById(id).style.display = 'block';
+  resetTimer();
+}
 
-  document.getElementById('gasSos').addEventListener('click',()=>{
-    alert('SOS! Emergency gas leak reported. Help is on the way.');
-  });
+document.getElementById('btnSelectPNG').onclick = () => showScreen('pngServiceMenu');
+document.getElementById('btnSelectLPG').onclick = () => showScreen('lpgServiceMenu');
+document.getElementById('backFromPngMenu').onclick = () => showScreen('mainMenu');
+document.getElementById('backFromLpgMenu').onclick = () => showScreen('mainMenu');
 
-  document.querySelectorAll('.num-pad button').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      const v=btn.textContent;
-      if(v==='C') consumerInput.value='';
-      else if(v==='←') consumerInput.value=consumerInput.value.slice(0,-1);
-      else consumerInput.value += v;
-    });
-  });
-  document.getElementById('submitId').addEventListener('click',()=>{
-    if(consumerInput.value==='') return alert('Please enter ID');
-    alert('Submitted ID: ' + consumerInput.value + '\nService: ' + lastService);
-    closeServiceModal();
-  });
+document.getElementById('btnPngNew').onclick = () => showScreen('pngNewForm');
+document.getElementById('btnPngBill').onclick = () => showScreen('pngBillScreen');
+document.getElementById('btnPngMeter').onclick = () => {
+  document.getElementById('pngCompTitle').textContent = 'Meter Issue';
+  document.getElementById('pngCompType').value = 'Meter Issue';
+  showScreen('pngComplaintForm');
+};
+document.getElementById('btnPngLeakage').onclick = () => {
+  document.getElementById('pngCompTitle').textContent = 'Leakage Report';
+  document.getElementById('pngCompType').value = 'Leakage';
+  showScreen('pngComplaintForm');
+};
+document.getElementById('btnPngEmerg').onclick = () => showScreen('pngEmergScreen');
+document.getElementById('btnPngRemove').onclick = () => showScreen('pngRemoveForm');
+
+document.getElementById('btnLpgDelivery').onclick = () => showScreen('lpgDeliveryForm');
+document.getElementById('btnLpgOvercharge').onclick = () => showScreen('lpgOverchargeForm');
+document.getElementById('btnLpgDefect').onclick = () => showScreen('lpgDefectForm');
+document.getElementById('btnLpgEmerg').onclick = () => showScreen('lpgEmergScreen');
+document.getElementById('btnLpgSafety').onclick = () => showScreen('lpgSafetyScreen');
+
+document.getElementById('submitPngNew').onclick = () => {
+  if(!document.getElementById('pngName').value) return alert('Enter name');
+  const id = 'REQ' + Math.random().toString().slice(2,8);
+  document.getElementById('confirmMsg').textContent = 'Request ID: ' + id;
+  showScreen('confirmScreen');
+};
+document.getElementById('cancelPngNew').onclick = () => showScreen('pngServiceMenu');
+
+const pngInput = document.getElementById('pngConsInput');
+document.querySelectorAll('#pngBillScreen .num-pad button').forEach(b => {
+  b.onclick = () => {
+    const t = b.textContent;
+    if(t === 'C') pngInput.value = '';
+    else if(t === '·') pngInput.value = pngInput.value.slice(0,-1);
+    else pngInput.value += t;
+  };
+});
+
+document.getElementById('submitPngCons').onclick = () => {
+  if(!pngInput.value) return alert('Enter ID');
+  document.getElementById('pngBillArea').innerHTML = '<p>Amount: Rs.850</p><p>Status: Overdue</p>';
+  showScreen('pngBillDetails');
+};
+document.getElementById('cancelPngBill').onclick = () => showScreen('pngServiceMenu');
+document.getElementById('backPngDetails').onclick = () => showScreen('pngBillScreen');
+document.getElementById('proceedPngPay').onclick = () => showScreen('pngPayOptions');
+
+['pngQR','pngCard','pngAEPS'].forEach(id => {
+  document.getElementById(id).onclick = () => alert('Payment processing...');
+});
+
+document.getElementById('cancelPngPay').onclick = () => showScreen('pngServiceMenu');
+
+document.getElementById('submitPngComp').onclick = () => {
+  if(!document.getElementById('pngCompCons').value) return alert('Enter ID');
+  const id = 'CMP' + Math.random().toString().slice(2,8);
+  document.getElementById('confirmMsg').textContent = 'Complaint ID: ' + id;
+  showScreen('confirmScreen');
+};
+document.getElementById('cancelPngComp').onclick = () => showScreen('pngServiceMenu');
+
+document.getElementById('submitPngEmerg').onclick = () => {
+  document.getElementById('confirmMsg').textContent = 'Emergency reported. Help dispatching...';
+  showScreen('confirmScreen');
+};
+document.getElementById('cancelPngEmerg').onclick = () => showScreen('pngServiceMenu');
+
+document.getElementById('submitPngRemove').onclick = () => {
+  if(!document.getElementById('pngRemoveId').value) return alert('Enter ID');
+  const id = 'REQ' + Math.random().toString().slice(2,8);
+  document.getElementById('confirmMsg').textContent = 'Request ID: ' + id;
+  showScreen('confirmScreen');
+};
+document.getElementById('cancelPngRemove').onclick = () => showScreen('pngServiceMenu');
+
+document.getElementById('submitLpgDeliv').onclick = () => {
+  if(!document.getElementById('lpgDeliv').value) return alert('Enter #');
+  const id = 'CMP' + Math.random().toString().slice(2,8);
+  document.getElementById('confirmMsg').textContent = 'Complaint ID: ' + id;
+  showScreen('confirmScreen');
+};
+document.getElementById('cancelLpgDeliv').onclick = () => showScreen('lpgServiceMenu');
+
+document.getElementById('submitLpgOver').onclick = () => {
+  if(!document.getElementById('lpgOverNum').value) return alert('Enter #');
+  const id = 'CMP' + Math.random().toString().slice(2,8);
+  document.getElementById('confirmMsg').textContent = 'Complaint ID: ' + id;
+  showScreen('confirmScreen');
+};
+document.getElementById('cancelLpgOver').onclick = () => showScreen('lpgServiceMenu');
+
+document.getElementById('submitLpgDefect').onclick = () => {
+  if(!document.getElementById('lpgDefectNum').value) return alert('Enter #');
+  const id = 'REP' + Math.random().toString().slice(2,8);
+  document.getElementById('confirmMsg').textContent = 'Report ID: ' + id;
+  showScreen('confirmScreen');
+};
+document.getElementById('cancelLpgDefect').onclick = () => showScreen('lpgServiceMenu');
+
+document.getElementById('submitLpgEmerg').onclick = () => {
+  document.getElementById('confirmMsg').textContent = 'EMERGENCY RECORDED. Help dispatching now. Call 1906.';
+  showScreen('confirmScreen');
+};
+document.getElementById('cancelLpgEmerg').onclick = () => showScreen('lpgServiceMenu');
+
+document.getElementById('backFromSafety').onclick = () => showScreen('lpgServiceMenu');
+document.getElementById('backFromConfirm').onclick = () => showScreen('mainMenu');
+
+['click','touchstart'].forEach(e => document.addEventListener(e, resetTimer));
+resetTimer();
+showScreen('mainMenu');
 </script>
 </body>
 </html>
