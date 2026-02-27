@@ -1,0 +1,62 @@
+-- Minimal SQL schema for SUVIDHA municipal demo (MySQL)
+-- Run: mysql -u root -p suvidha < schema.sql
+
+CREATE TABLE IF NOT EXISTS certificates (
+  id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+  application_id VARCHAR(64) UNIQUE,
+  person_name VARCHAR(200) NOT NULL,
+  father_name VARCHAR(200),
+  dob DATE,
+  type ENUM('birth', 'death') DEFAULT 'birth',
+  status VARCHAR(20) DEFAULT 'pending',
+  registered_mobile VARCHAR(20),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  ready_at TIMESTAMP NULL,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS otps (
+  id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+  certificate_id VARCHAR(36) NOT NULL,
+  otp VARCHAR(10) NOT NULL,
+  expires_at TIMESTAMP NOT NULL,
+  used BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (certificate_id) REFERENCES certificates(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS retrieval_codes (
+  id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+  certificate_id VARCHAR(36) NOT NULL,
+  code VARCHAR(32) UNIQUE NOT NULL,
+  mobile VARCHAR(20),
+  issued_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  expires_at TIMESTAMP NOT NULL,
+  used BOOLEAN DEFAULT FALSE,
+  used_at TIMESTAMP NULL,
+  used_by VARCHAR(200),
+  FOREIGN KEY (certificate_id) REFERENCES certificates(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS complaints (
+  id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+  complaint_id VARCHAR(20) UNIQUE NOT NULL,
+  name VARCHAR(200),
+  mobile VARCHAR(20),
+  ward VARCHAR(50),
+  area VARCHAR(200),
+  landmark VARCHAR(200),
+  category VARCHAR(50),
+  description TEXT,
+  status VARCHAR(20) DEFAULT 'pending',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS admins (
+  id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+  username VARCHAR(100) UNIQUE NOT NULL,
+  password_hash VARCHAR(200),
+  role VARCHAR(20) DEFAULT 'operator',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

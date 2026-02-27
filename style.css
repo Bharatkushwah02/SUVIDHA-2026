@@ -38,6 +38,17 @@ main.landing-main { flex-direction:column; }
 /* helper screens */
 .screen { display:none; }
 
+/* form alignment helpers */
+.form-row { display:flex; align-items:center; margin:8px 0; }
+.form-row label { width:120px; flex-shrink:0; }
+.form-row input, .form-row select, .form-row textarea { flex:1; padding:8px; font-size:1.1rem; }
+
+/* ensure complaint screen fields align even without form rows */
+#compScreen label { display:inline-block; width:120px; vertical-align:top; }
+#compScreen input, #compScreen select, #compScreen textarea { width:80%; font-size:1.2rem; padding:6px; }
+
+
+
 /* rows of buttons */
 .button-row { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:10px 0; }
 

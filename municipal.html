@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-<title>SUVIDHA - Municipal Services</title>
+<title>SUVIDHA - Municipal Kiosk</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -15,71 +15,72 @@
   </div>
 </header>
 
-<main>
-  <div class="card-container">
-    <div class="card">
-      <h2>🧹 Public Complaint Services</h2>
-      <button class="btn service" data-service="Garbage Not Collected">Garbage Not Collected</button>
-      <button class="btn service" data-service="Street Light Not Working">Street Light Not Working</button>
-      <button class="btn service" data-service="Water Leakage">Water Leakage</button>
-      <button class="btn service" data-service="Drainage Blockage">Drainage Blockage</button>
-      <button class="btn service" data-service="Road Damage/Pothole">Road Damage / Pothole</button>
-      <button class="btn service" data-service="Stray Animal Complaint">Stray Animal Complaint</button>
-      <button class="btn service" data-service="Illegal Construction Complaint">Illegal Construction Complaint</button>
-    </div>
-    <div class="card">
-      <h2>🚰 Utility Municipal Services</h2>
-      <button class="btn service" data-service="New Water Connection Apply">New Water Connection Apply</button>
-      <button class="btn service" data-service="Water Connection Transfer">Water Connection Transfer</button>
-      <button class="btn service" data-service="Disconnection Request">Disconnection Request</button>
-      <button class="btn service" data-service="Tanker Booking Request">Tanker Booking Request</button>
-    </div>
-    <div class="card">
-      <h2>📄 Certificate Services</h2>
-      <button class="btn service" data-service="Birth Certificate Apply/Download">Birth Certificate Apply/Download</button>
-      <button class="btn service" data-service="Death Certificate Apply/Download">Death Certificate Apply/Download</button>
-      <button class="btn service" data-service="Marriage Certificate Status">Marriage Certificate Status</button>
-      <button class="btn service" data-service="Income Certificate Status">Income Certificate Status</button>
-    </div>
-    <div class="card">
-      <h2>🏗 Civic Permission Services</h2>
-      <button class="btn service" data-service="Building Plan Approval Status">Building Plan Approval Status</button>
-      <button class="btn service" data-service="Shop License Application">Shop License Application</button>
-      <button class="btn service" data-service="Vendor Registration">Vendor Registration</button>
-      <button class="btn service" data-service="Hawker Permit">Hawker Permit</button>
-    </div>
-    <div class="card">
-      <h2>🏥 Public Health Services</h2>
-      <button class="btn service" data-service="Vaccination Camp Info">Vaccination Camp Info</button>
-      <button class="btn service" data-service="Health Camp Registration">Health Camp Registration</button>
-      <button class="btn service" data-service="Public Toilet Location Info">Public Toilet Location Info</button>
-      <button class="btn service" data-service="Sanitation Drive Info">Sanitation Drive Info</button>
-    </div>
-    <div class="card">
-      <h2>📢 Information Services</h2>
-      <button class="btn info" data-service="Govt Welfare Schemes">Govt Welfare Schemes</button>
-      <button class="btn info" data-service="City Announcements">City Announcements</button>
-      <button class="btn info" data-service="Emergency Alerts">Emergency Alerts</button>
-      <button class="btn info" data-service="Ward Officer Contact Details">Ward Officer Contact Details</button>
-      <button class="btn info" data-service="Garbage Pickup Schedule">Garbage Pickup Schedule</button>
-    </div>
+<main id="mainMenu" style="padding:20px;">
+  <div style="text-align:center; margin-bottom:30px;">
+    <h2>Municipal Services</h2>
+  </div>
+  <div class="button-row" style="justify-content:center; gap:20px; flex-wrap:wrap;">
+    <button class="btn" id="btnCert">🔍 Certificate Retrieval</button>
+    <button class="btn" id="btnComp">📝 Public Complaint</button>
   </div>
 </main>
 
-<!-- modals -->
-<div id="modalBackdrop" class="modal-backdrop">
-  <div class="modal" id="modalContent">
-    <button class="close-btn" id="modalClose">&times;</button>
-    <h3 id="modalTitle">Enter Consumer ID</h3>
-    <input type="text" id="consumerId" readonly />
-    <div class="num-pad">
-      <button>1</button><button>2</button><button>3</button>
-      <button>4</button><button>5</button><button>6</button>
-      <button>7</button><button>8</button><button>9</button>
-      <button id="clearBtn">C</button><button>0</button><button id="backBtn">&larr;</button>
-    </div>
-    <button class="btn" id="submitId">Submit</button>
+<!-- certificate screens -->
+<div id="certScreen" class="screen" style="display:none;padding:20px;">
+  <h2>Certificate Status Check</h2>
+  <form id="certForm">
+    <div class="form-row"><label for="certAppId">Application ID</label><input id="certAppId" type="text"></div>
+    <div style="text-align:center;margin:10px 0;">-- OR --</div>
+    <div class="form-row"><label for="certName">Name</label><input id="certName" type="text"></div>
+    <div class="form-row"><label for="certFName">Father Name</label><input id="certFName" type="text"></div>
+    <div class="form-row"><label for="certDob">DOB</label><input id="certDob" type="date"></div>
+    <div class="button-row" style="margin-top:20px;"><button type="button" class="btn" id="certCheck">Check</button><button type="button" class="btn" id="certBack">Back</button></div>
+  </form>
+  <div id="certResult" style="margin-top:20px;font-size:1.1rem;"></div>
+</div>
+
+<div id="otpScreen" class="screen" style="display:none;padding:20px;">
+  <h2>Enter OTP</h2>
+  <input id="otpInput" type="text" readonly style="font-size:2rem;text-align:center;width:80%;" />
+  <div class="num-pad">
+    <button>1</button><button>2</button><button>3</button>
+    <button>4</button><button>5</button><button>6</button>
+    <button>7</button><button>8</button><button>9</button>
+    <button id="otpClear">C</button><button>0</button><button id="otpBack">·</button>
   </div>
+  <div class="button-row"><button class="btn" id="otpSubmit">Submit</button><button class="btn" id="otpCancel">Cancel</button></div>
+  <div id="codeResult" style="margin-top:20px;font-size:1.1rem;"></div>
+</div>
+
+<!-- shared numeric keypad -->
+<div id="numPad" class="num-pad" style="display:none;">
+  <button>1</button><button>2</button><button>3</button>
+  <button>4</button><button>5</button><button>6</button>
+  <button>7</button><button>8</button><button>9</button>
+  <button id="padClear">C</button><button>0</button><button id="padBack">·</button>
+</div>
+
+<!-- complaint screen -->
+<div id="compScreen" class="screen" style="display:none;padding:20px;">
+  <h2>Submit Complaint</h2>
+  <form id="compForm">
+    <div class="form-row"><label for="compName">Name</label><input id="compName" type="text"></div>
+    <div class="form-row"><label for="compMobile">Mobile</label><input id="compMobile" type="text" readonly></div>
+    <div class="form-row"><label for="compWard">Ward/Area</label><input id="compWard" type="text"></div>
+    <div class="form-row"><label for="compLand">Landmark</label><input id="compLand" type="text"></div>
+    <div class="form-row"><label for="compCat">Category</label>
+      <select id="compCat">
+        <option value="garbage">Garbage Collection</option>
+        <option value="street_light">Street Light Issue</option>
+        <option value="drainage">Drainage Blockage</option>
+        <option value="road_damage">Road Damage</option>
+        <option value="safai">Safai Complaint</option>
+      </select>
+    </div>
+    <div class="form-row"><label for="compDesc">Description</label><textarea id="compDesc" rows="3"></textarea></div>
+    <div class="button-row"><button type="button" class="btn" id="compSubmit">Submit</button><button type="button" class="btn" id="compCancel">Back</button></div>
+  </form>
+  <div id="compResult" style="margin-top:20px;font-size:1.1rem;"></div>
 </div>
 
 <footer>
@@ -102,51 +103,161 @@
   setInterval(updateClock,1000);
   updateClock();
 
-  // modal logic
-  const backdrop=document.getElementById('modalBackdrop');
-  const consumerInput=document.getElementById('consumerId');
-  const modalTitle=document.getElementById('modalTitle');
-  let lastService = '';
-  function openServiceModal(service) {
-    lastService = service;
-    modalTitle.textContent = service;
-    consumerInput.value='';
-    backdrop.classList.add('active');
-  }
-  function closeServiceModal(){ backdrop.classList.remove('active'); }
-  document.getElementById('modalClose').onclick=closeServiceModal;
-
-  document.querySelectorAll('.service').forEach(btn=>{
-    btn.addEventListener('click',()=>openServiceModal(btn.dataset.service));
-  });
-
-  // handle informational buttons separately
-  document.querySelectorAll('.info').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      alert('['+btn.dataset.service+']\n\n(Static info would appear here in a real app.)');
-    });
-  });
-
-  document.querySelectorAll('.num-pad button').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      const v=btn.textContent;
-      if(v==='C') consumerInput.value='';
-      else if(v==='←') consumerInput.value=consumerInput.value.slice(0,-1);
-      else consumerInput.value += v;
-    });
-  });
-  document.getElementById('submitId').addEventListener('click',()=>{
-    if(consumerInput.value==='') return alert('Please enter ID');
-    const svc = lastService;
-    if (svc.includes('Complaint')) {
-      const cid = 'CMP' + Math.floor(Math.random()*900000 + 100000);
-      alert('Complaint registered\nID: ' + cid + '\nStatus: Pending');
-    } else if (svc.includes('Certificate')) {
-      alert('Checking status for ' + svc + '\n(This is a demo; real API needed.)');
-    } else {
-      alert('Submitted ID: ' + consumerInput.value + '\nService: ' + svc);
+  let currentCertId, currentMobile, currentRequestId;
+  function showScreen(id){
+    document.querySelectorAll('.screen,#mainMenu').forEach(e=>e.style.display='none');
+    document.getElementById('numPad').style.display='none'; // Hide shared keypad
+    document.activeElement.blur(); // Clear focus from inputs
+    if(id) document.getElementById(id).style.display='block';
+    // clear request id when leaving OTP screen to avoid stale values (also clear sessionStorage)
+    if(id !== 'otpScreen'){
+      currentRequestId = null;
+      try{ sessionStorage.removeItem('currentRequestId'); }catch(e){}
     }
-    closeServiceModal();
+  }
+  document.getElementById('btnCert').onclick=()=>showScreen('certScreen');
+  document.getElementById('btnComp').onclick=()=>showScreen('compScreen');
+  document.getElementById('certBack').onclick=()=>showScreen('mainMenu');
+  document.getElementById('compCancel').onclick=()=>showScreen('mainMenu');
+  document.getElementById('otpCancel').onclick=()=>showScreen('mainMenu');
+
+  async function runCertCheck(){
+    const app=document.getElementById('certAppId').value.trim();
+    const name=document.getElementById('certName').value.trim();
+    const father=document.getElementById('certFName').value.trim();
+    const dob=document.getElementById('certDob').value;
+    if(!app && !(name && father && dob)) return alert('Enter details');
+    const payload = app?{application_id:app}:{name, father_name:father, dob};
+    const res=await fetch('/api/certificates/check',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    const j=await res.json();
+    if(!j.found){ document.getElementById('certResult').textContent='Record not found.'; return; }
+    if(j.status!=='ready'){ document.getElementById('certResult').textContent='Certificate not ready yet.'; return; }
+    currentCertId=j.certificate_id;
+    currentMobile=j.mobile_mask;
+    // initial confirmation
+    document.getElementById('certResult').textContent='Ready. Sending OTP to '+currentMobile+'...';
+    const r2 = await fetch('/api/certificates/request-otp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({certificate_id:currentCertId,mobile:currentMobile})});
+    const j2 = await r2.json();
+    if(r2.ok){ 
+      currentRequestId = j2.request_id; // Store request_id for OTP verification
+      try{ sessionStorage.setItem('currentRequestId', String(j2.request_id)); }catch(e){}
+      document.getElementById('otpInput').value = ''; // Clear OTP input
+      // For demo/testing: show OTP on screen since SMS is simulated
+      const otpMsg = `OTP has been sent to ${currentMobile}. Demo OTP: <strong>${j2.otp}</strong> (Expires in ${j2.expires_in_minutes} minutes)`;
+      document.getElementById('certResult').textContent='OTP has been sent to your registered mobile number.';
+      console.log(`📱 DEMO OTP: ${j2.otp} (Request ID: ${j2.request_id})`);
+      console.log('ℹ️ Enter this OTP in the kiosk to test the flow.');
+      showScreen('otpScreen');
+      // Append OTP message to OTP screen so it's visible
+      document.getElementById('codeResult').innerHTML = otpMsg;
+    } else {
+      document.getElementById('certResult').textContent='Failed to send OTP. Please try again.';
+    }
+  }
+  document.getElementById('certCheck').onclick=runCertCheck;
+  document.getElementById('certForm').addEventListener('submit',e=>{ e.preventDefault(); runCertCheck(); });
+  ['certAppId','certName','certFName','certDob'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){
+      el.addEventListener('keydown',e=>{ if(e.key==='Enter'){ runCertCheck(); }});
+      el.addEventListener('focus',()=>showPad(el));
+    }
+  });
+  // show keypad when any text input is focused (useful for complaint/mobile etc.)
+  document.querySelectorAll('input').forEach(inp=>{
+    inp.addEventListener('focus',()=>showPad(inp));
+  });
+
+  const otpInput=document.getElementById('otpInput');
+  document.querySelectorAll('#otpScreen .num-pad button').forEach(b=>{b.onclick=()=>{const t=b.textContent;if(t==='C') otpInput.value='';else if(t==='·') otpInput.value=otpInput.value.slice(0,-1);else otpInput.value+=t;};});
+  document.getElementById('otpClear').onclick=()=>otpInput.value='';
+  document.getElementById('otpBack').onclick=()=>otpInput.value=otpInput.value.slice(0,-1);
+  document.getElementById('otpCancel').onclick=()=>showScreen('mainMenu');
+  document.getElementById('otpSubmit').onclick=async()=>{
+    const otp=otpInput.value.trim();
+    if(!otp) return alert('Enter OTP');
+    // try to recover request id from sessionStorage if variable is missing
+    if(!currentRequestId){
+      try{ const stored = sessionStorage.getItem('currentRequestId'); if(stored) currentRequestId = String(stored); }catch(e){}
+    }
+    if(!currentRequestId){
+      alert('No request ID – please go back and check details again');
+      return;
+    }
+    const resultDiv = document.getElementById('codeResult');
+    resultDiv.textContent = 'Verifying...';
+    console.log('OTP verify payload', {request_id: currentRequestId, otp});
+    try{
+      const r = await fetch('/api/certificates/verify-otp',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({request_id: currentRequestId, otp: otp})
+      });
+      const j=await r.json();
+      if(j.success){
+        resultDiv.textContent='Retrieval code: '+j.code;
+        alert('Link successfully sent to your registered mobile number');
+        try{ sessionStorage.removeItem('currentRequestId'); }catch(e){}
+        currentRequestId = null;
+      }else{
+        // map server error codes to user-friendly messages
+        let msg = j.error || 'Unknown error';
+        if(msg === 'invalid otp') msg = 'Invalid OTP. Please try again.';
+        else if(msg === 'expired') msg = 'OTP expired. Request a new OTP.';
+        else if(msg === 'used') msg = 'This OTP has already been used.';
+        else if(msg === 'not found') msg = 'Request not found. Please re-check details.';
+        else if(msg === 'missing') msg = 'Missing data. Please request OTP again.';
+        resultDiv.textContent = 'Error: ' + msg;
+        console.warn('OTP verify response', j);
+      }
+    }catch(err){
+      resultDiv.textContent = 'Error: unable to reach server';
+      console.error('OTP verify network error', err);
+    }
+  };
+  const pad=document.getElementById('numPad');
+  function showPad(field){
+    // Don't show shared keypad for OTP input - it has its own keypad
+    if(field.id === 'otpInput') return;
+    pad.style.display='grid';
+    pad.currentField=field;
+  }
+  document.getElementById('padClear').onclick=()=>{pad.currentField.value='';};
+  document.getElementById('padBack').onclick=()=>{pad.currentField.value=pad.currentField.value.slice(0,-1);};
+  document.querySelectorAll('#numPad button').forEach(b=>{
+    b.onclick=()=>{
+      if(b.id==='padClear' || b.id==='padBack') return;
+      if(pad.currentField) pad.currentField.value+=b.textContent;
+    };
+  });
+
+  async function submitComplaint(){
+    const name=document.getElementById('compName').value.trim();
+    const mobile=document.getElementById('compMobile').value.trim();
+    const ward=document.getElementById('compWard').value.trim();
+    const area=document.getElementById('compWard').value.trim();
+    const landmark=document.getElementById('compLand').value.trim();
+    const category=document.getElementById('compCat').value;
+    const desc=document.getElementById('compDesc').value.trim();
+    if(!name||!mobile||!ward||!category) return alert('Fill required fields');
+    console.log('Submitting complaint', {name,mobile,ward,area,landmark,category,desc});
+    const r=await fetch('/api/complaints',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,mobile,ward,area,landmark,category,description:desc})});
+    const j=await r.json();
+    if(j.complaint_id){
+      const msg = 'Complaint submitted – ID: '+j.complaint_id;
+      document.getElementById('compResult').textContent=msg;
+      alert(msg);
+      // clear fields for next use
+      document.getElementById('compForm').reset();
+    } else {
+      document.getElementById('compResult').textContent='Error: '+(j.error||'');
+    }
+  }
+  document.getElementById('compSubmit').onclick=submitComplaint;
+  document.getElementById('compForm').addEventListener('submit',e=>{ e.preventDefault(); submitComplaint(); });
+  ['compName','compMobile','compWard','compLand','compCat','compDesc'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.addEventListener('keydown',e=>{ if(e.key==='Enter'){ submitComplaint(); }});
   });
 </script>
 </body>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>Operator Portal</title>
+<link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header><div class="title">E-Mitra Operator</div></header>
+<main style="padding:20px;max-width:500px;margin:auto;">
+  <h2>Verify Retrieval Code</h2>
+  <input id="codeInput" type="text" placeholder="Enter code" style="width:100%;font-size:1.5rem;" />
+  <div class="button-row" style="margin-top:20px;"><button class="btn" id="verifyBtn">Verify</button></div>
+  <div id="opResult" style="margin-top:20px;font-size:1.1rem;"></div>
+</main>
+<script>
+  document.getElementById('verifyBtn').onclick=async()=>{
+    const code=document.getElementById('codeInput').value.trim();
+    if(!code) return alert('Enter code');
+    const res=await fetch('/op/verify-code',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code})});
+    const j=await res.json();
+    if(res.ok){
+      document.getElementById('opResult').innerHTML=`<p>Certificate for <strong>${j.person_name}</strong> (${j.type})</p><button id="markBtn" class="btn">Mark Retrieved</button>`;
+      document.getElementById('markBtn').onclick=async()=>{
+        const r2=await fetch('/op/use-code',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code,operator:'operator1'})});
+        if(r2.ok) alert('Marked as used');
+      };
+    } else {
+      document.getElementById('opResult').textContent=j.error || 'Invalid code';
+    }
+  };
+</script>
+</body>
+</html>
