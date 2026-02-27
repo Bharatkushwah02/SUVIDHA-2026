@@ -103,7 +103,11 @@
   setInterval(updateClock,1000);
   updateClock();
 
-  let currentCertId, currentMobile, currentRequestId;
+  // if the HTML is opened from a different server/port (e.g. Live Server on 5500)
+// we still want the API requests to go to our Node backend on port 3000.
+const API_BASE = (location.port && location.port !== '3000') ? 'http://localhost:3000' : '';
+
+let currentCertId, currentMobile, currentRequestId;
   function showScreen(id){
     document.querySelectorAll('.screen,#mainMenu').forEach(e=>e.style.display='none');
     document.getElementById('numPad').style.display='none'; // Hide shared keypad
@@ -128,7 +132,7 @@
     const dob=document.getElementById('certDob').value;
     if(!app && !(name && father && dob)) return alert('Enter details');
     const payload = app?{application_id:app}:{name, father_name:father, dob};
-    const res=await fetch('/api/certificates/check',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    const res=await fetch(API_BASE + '/api/certificates/check',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
     const j=await res.json();
     if(!j.found){ document.getElementById('certResult').textContent='Record not found.'; return; }
     if(j.status!=='ready'){ document.getElementById('certResult').textContent='Certificate not ready yet.'; return; }
@@ -136,7 +140,7 @@
     currentMobile=j.mobile_mask;
     // initial confirmation
     document.getElementById('certResult').textContent='Ready. Sending OTP to '+currentMobile+'...';
-    const r2 = await fetch('/api/certificates/request-otp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({certificate_id:currentCertId,mobile:currentMobile})});
+    const r2 = await fetch(API_BASE + '/api/certificates/request-otp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({certificate_id:currentCertId,mobile:currentMobile})});
     const j2 = await r2.json();
     if(r2.ok){ 
       currentRequestId = j2.request_id; // Store request_id for OTP verification
@@ -188,7 +192,7 @@
     resultDiv.textContent = 'Verifying...';
     console.log('OTP verify payload', {request_id: currentRequestId, otp});
     try{
-      const r = await fetch('/api/certificates/verify-otp',{
+      const r = await fetch(API_BASE + '/api/certificates/verify-otp',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify({request_id: currentRequestId, otp: otp})

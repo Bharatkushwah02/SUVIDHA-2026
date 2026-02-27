@@ -5,6 +5,15 @@ const bcrypt = require("bcrypt");
 
 const app = express();
 app.use(express.json());
+// simple CORS support without external dependency
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,PATCH,DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+  if (req.method === 'OPTIONS') return res.sendStatus(200);
+  next();
+});
+
 app.use(express.static("."));  // serve all files from root directory
 app.use('/operator', express.static('operator'));
 app.use('/admin', express.static('admin'));
