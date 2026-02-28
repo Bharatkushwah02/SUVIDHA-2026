@@ -53,3 +53,39 @@ main.landing-main { flex-direction:column; }
 footer { position:fixed; bottom:0; left:0; right:0; height:40px; background:#003366; color:#fff; overflow:hidden; z-index:1000; }
 #ticker { white-space:nowrap; display:inline-block; position:absolute; will-change:transform; animation:scroll 40s linear infinite; font-size:1rem; padding-left:100%; }
 @keyframes scroll { from { transform:translateX(0); } to { transform:translateX(-100%); } }
+
+.electricity-slider {
+	width: 100%;
+	overflow: hidden;
+	margin: 0 auto 28px;
+	border-radius: 0;
+	background: transparent;
+	box-shadow: none;
+	max-width: 1500px;
+}
+
+.electricity-slider-track {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	width: max-content;
+	padding: 0;
+	animation: electricityScroll 36s linear infinite;
+}
+
+.electricity-slide {
+	width: auto;
+	height: 230px;
+	object-fit: contain;
+	object-position: center;
+	background: transparent;
+	border-radius: 0;
+	display: block;
+	flex-shrink: 0;
+	border: none;
+}
+
+@keyframes electricityScroll {
+	from { transform: translateX(0); }
+	to { transform: translateX(-50%); }
+}
