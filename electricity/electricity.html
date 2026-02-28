@@ -4,11 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <title>SUVIDHA - Electricity</title>
-<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="electricity.css" />
 </head>
 <body>
 <header>
-  <div class="title" onclick="location.href='index.html'">SUVIDHA</div>
+  <div class="title" onclick="location.href='../index/index.html'">SUVIDHA</div>
   <div class="info">
     <div id="dateTime">--/--/---- --:--:--</div>
     <button id="langToggle">हिंदी / English</button>
@@ -19,19 +19,19 @@
   <div class="card-container">
     <div class="card" style="cursor:pointer;" id="btnPay">
       <h2>Pay Electricity Bill</h2>
-      <img src="payelectricitybill.png" alt="Pay Electricity" style="max-width:100%;height:120px;object-fit:contain;margin-top:10px;" />
+      <img src="images/payelectricitybill.png" alt="Pay Electricity" style="max-width:100%;height:120px;object-fit:contain;margin-top:10px;" />
     </div>
     <div class="card" style="cursor:pointer;" id="btnComplaint">
       <h2>Register Complaint</h2>
-      <img src="registercomplaint.png" alt="Complaint" style="max-width:100%;height:120px;object-fit:contain;margin-top:10px;" />
+      <img src="images/registercomplaint.png" alt="Complaint" style="max-width:100%;height:120px;object-fit:contain;margin-top:10px;" />
     </div>
     <div class="card" style="cursor:pointer;" id="btnConnection">
       <h2>Connection Services</h2>
-      <img src="connectionservices.png" alt="Connection" style="max-width:100%;height:120px;object-fit:contain;margin-top:10px;" />
+      <img src="images/connectionservices.png" alt="Connection" style="max-width:100%;height:120px;object-fit:contain;margin-top:10px;" />
     </div>
     <div class="card" style="cursor:pointer;" id="btnEmergency">
       <h2 class="sos">Emergency Report</h2>
-      <img src="emergencyreport.png" alt="Emergency" style="max-width:100%;height:120px;object-fit:contain;margin-top:10px;" />
+      <img src="images/emergencyreport.png" alt="Emergency" style="max-width:100%;height:120px;object-fit:contain;margin-top:10px;" />
     </div>
   </div>
 </main>
@@ -136,94 +136,6 @@
   </div>
 </footer>
 
-<script>
-  // live clock
-  function updateClock() {
-    const now=new Date();
-    const opts={year:'numeric',month:'2-digit',day:'2-digit',
-                hour:'2-digit',minute:'2-digit',second:'2-digit'};
-    document.getElementById('dateTime').textContent=now.toLocaleString('en-GB',opts);
-  }
-  setInterval(updateClock,1000);
-  updateClock();
-
-  // navigation helpers
-  function showScreen(id) {
-    document.querySelectorAll('.screen, #mainMenu').forEach(el=>el.style.display='none');
-    document.getElementById(id).style.display='block';
-    resetTimer();
-  }
-
-  // main menu buttons
-  document.getElementById('btnPay').addEventListener('click',()=> showScreen('payScreen'));
-  document.getElementById('btnComplaint').addEventListener('click',()=> showScreen('complaintScreen'));
-  document.getElementById('btnConnection').addEventListener('click',()=> showScreen('connectionScreen'));
-  document.getElementById('btnEmergency').addEventListener('click',()=> showScreen('emergencyScreen'));
-
-  // pay bill logic
-  const billInput = document.getElementById('billNumberInput');
-  document.querySelectorAll('#payScreen .num-pad button').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      const v=btn.textContent;
-      if(v==='C') billInput.value='';
-      else if(v==='←') billInput.value=billInput.value.slice(0,-1);
-      else billInput.value+=v;
-    });
-  });
-  document.getElementById('submitBill').onclick=()=>{
-    if(!billInput.value) return alert('Enter bill number');
-    // dummy details
-    const details = `<p>Consumer Name: John Doe</p><p>Address: 123 Main St</p>
-      <p>Due Amount: ₹1500</p><p>Due Date: 28/02/2026</p>
-      <p>Last 6 bills: Jan ₹1200, Dec ₹1100, Nov ₹1300, Oct ₹1250, Sep ₹1150, Aug ₹1000</p>`;
-    document.getElementById('detailsArea').innerHTML=details;
-    showScreen('billDetails');
-  };
-  document.getElementById('cancelPay').onclick=()=> showScreen('mainMenu');
-  document.getElementById('backToPay').onclick=()=> showScreen('payScreen');
-  document.getElementById('proceedPayment').onclick=()=> showScreen('paymentOptions');
-  document.getElementById('optQR').onclick=()=> alert('Showing QR code...');
-  document.getElementById('optCard').onclick=()=> alert('Proceed to card entry (not implemented)');
-  document.getElementById('optAeps').onclick=()=> alert('AEPS biometric flow');
-  document.getElementById('cancelPayment').onclick=()=> showScreen('mainMenu');
-
-  // complaint logic
-  document.getElementById('submitComplaint').onclick=()=>{
-    const cid='CMP'+Math.floor(Math.random()*900000+100000);
-    alert('Complaint registered\nID: '+cid+'\nReceipt will be printed');
-    showScreen('mainMenu');
-  };
-  document.getElementById('cancelComplaint').onclick=()=> showScreen('mainMenu');
-
-  // connection services
-  function openConnForm(title){
-    document.getElementById('connTitle').textContent=title;
-    showScreen('connForm');
-  }
-  document.getElementById('connNew').onclick=()=>openConnForm('New Connection');
-  document.getElementById('connMeter').onclick=()=>openConnForm('New Meter Installation');
-  document.getElementById('connDiscon').onclick=()=>openConnForm('Disconnection Request');
-  document.getElementById('cancelConnection').onclick=()=>showScreen('mainMenu');
-  document.getElementById('backConn').onclick=()=>showScreen('connectionScreen');
-  document.getElementById('submitConn').onclick=()=>{
-    alert('Request submitted');
-    showScreen('mainMenu');
-  };
-
-  // emergency
-  document.getElementById('emLiveWire').onclick=()=>showScreen('emConfirm');
-  document.getElementById('emOutage').onclick=()=>showScreen('emConfirm');
-  document.getElementById('cancelEmergency').onclick=()=>showScreen('mainMenu');
-  document.getElementById('backFromEm').onclick=()=>showScreen('mainMenu');
-
-  // inactivity timeout
-  let idleTimer;
-  function resetTimer(){ clearTimeout(idleTimer); idleTimer=setTimeout(()=>showScreen('mainMenu'),60000); }
-  ['click','touchstart'].forEach(evt=>document.addEventListener(evt,resetTimer));
-  resetTimer();
-
-  // start on main
-  showScreen('mainMenu');
-</script>
+<script src="electricity.js"></script>
 </body>
 </html>
