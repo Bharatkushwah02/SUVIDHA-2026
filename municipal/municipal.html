@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>SUVIDHA - Municipal Kiosk</title>
+<link rel="stylesheet" href="municipal.css" />
+</head>
+<body>
+<header>
+  <div class="title" onclick="location.href='../index/index.html'">SUVIDHA</div>
+  <div class="info">
+    <div id="dateTime">--/--/---- --:--:--</div>
+    <button id="langToggle">हिंदी / English</button>
+  </div>
+</header>
+
+<main id="mainMenu" style="padding:20px;">
+  <div style="text-align:center; margin-bottom:30px;">
+    <h2>Municipal Services</h2>
+  </div>
+  <div class="button-row" style="justify-content:center; gap:20px; flex-wrap:wrap;">
+    <button class="btn" id="btnCert">🔍 Certificate Retrieval</button>
+    <button class="btn" id="btnComp">📝 Public Complaint</button>
+  </div>
+</main>
+
+<!-- certificate screens -->
+<div id="certScreen" class="screen" style="display:none;padding:20px;">
+  <h2>Certificate Status Check</h2>
+  <form id="certForm">
+    <div class="form-row"><label for="certAppId">Application ID</label><input id="certAppId" type="text"></div>
+    <div style="text-align:center;margin:10px 0;">-- OR --</div>
+    <div class="form-row"><label for="certName">Name</label><input id="certName" type="text"></div>
+    <div class="form-row"><label for="certFName">Father Name</label><input id="certFName" type="text"></div>
+    <div class="form-row"><label for="certDob">DOB</label><input id="certDob" type="date"></div>
+    <div class="button-row" style="margin-top:20px;"><button type="button" class="btn" id="certCheck">Check</button><button type="button" class="btn" id="certBack">Back</button></div>
+  </form>
+  <div id="certResult" style="margin-top:20px;font-size:1.1rem;"></div>
+</div>
+
+<div id="otpScreen" class="screen" style="display:none;padding:20px;">
+  <h2>Enter OTP</h2>
+  <input id="otpInput" type="text" readonly style="font-size:2rem;text-align:center;width:80%;" />
+  <div class="num-pad">
+    <button>1</button><button>2</button><button>3</button>
+    <button>4</button><button>5</button><button>6</button>
+    <button>7</button><button>8</button><button>9</button>
+    <button id="otpClear">C</button><button>0</button><button id="otpBack">·</button>
+  </div>
+  <div class="button-row"><button class="btn" id="otpSubmit">Submit</button><button class="btn" id="otpCancel">Cancel</button></div>
+  <div id="codeResult" style="margin-top:20px;font-size:1.1rem;"></div>
+</div>
+
+<!-- shared numeric keypad -->
+<div id="numPad" class="num-pad" style="display:none;">
+  <button>1</button><button>2</button><button>3</button>
+  <button>4</button><button>5</button><button>6</button>
+  <button>7</button><button>8</button><button>9</button>
+  <button id="padClear">C</button><button>0</button><button id="padBack">·</button>
+</div>
+
+<!-- complaint screen -->
+<div id="compScreen" class="screen" style="display:none;padding:20px;">
+  <h2>Submit Complaint</h2>
+  <form id="compForm">
+    <div class="form-row"><label for="compName">Name</label><input id="compName" type="text"></div>
+    <div class="form-row"><label for="compMobile">Mobile</label><input id="compMobile" type="text" readonly></div>
+    <div class="form-row"><label for="compWard">Ward/Area</label><input id="compWard" type="text"></div>
+    <div class="form-row"><label for="compLand">Landmark</label><input id="compLand" type="text"></div>
+    <div class="form-row"><label for="compCat">Category</label>
+      <select id="compCat">
+        <option value="garbage">Garbage Collection</option>
+        <option value="street_light">Street Light Issue</option>
+        <option value="drainage">Drainage Blockage</option>
+        <option value="road_damage">Road Damage</option>
+        <option value="safai">Safai Complaint</option>
+      </select>
+    </div>
+    <div class="form-row"><label for="compDesc">Description</label><textarea id="compDesc" rows="3"></textarea></div>
+    <div class="button-row"><button type="button" class="btn" id="compSubmit">Submit</button><button type="button" class="btn" id="compCancel">Back</button></div>
+  </form>
+  <div id="compResult" style="margin-top:20px;font-size:1.1rem;"></div>
+</div>
+
+<footer>
+  <div id="ticker">
+    📢 UPDATE: Last date to pay Municipal Tax extended to 31st March |
+    🚨 ALERT: Scheduled power cut in City Center tomorrow from 10 AM to 2 PM |
+    📌 SCHEME: Apply for PM Awas Yojana at your nearest municipal center | 
+    📣 NEW: Gas connection removal/addition now available at kiosk. |
+    📍 INFO: Garbage pickup schedule alternate days by ward.
+  </div>
+</footer>
+
+<script src="municipal.js"></script>
+</body>
+</html>

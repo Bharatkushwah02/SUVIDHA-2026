@@ -4,11 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <title>SUVIDHA - Gas Services</title>
-<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="gas.css" />
 </head>
 <body>
 <header>
-  <div class="title" onclick="location.href='index.html'">SUVIDHA</div>
+  <div class="title" onclick="location.href='../index/index.html'">SUVIDHA</div>
   <div class="info">
     <div id="dateTime">--/--/---- --:--:--</div>
     <button id="langToggle">हिंदी / English</button>
@@ -18,6 +18,22 @@
 <main id="mainMenu">
   <div style="width:100%;padding:20px;">
     <h2 style="text-align:center;margin-bottom:40px;font-size:2.5rem;">Select Gas Service Type</h2>
+    <div class="gas-slider" aria-label="Gas service info slider">
+      <div class="gas-slider-track">
+        <img class="gas-slide" src="images/gas1.jpeg" alt="Gas service slide 1" />
+        <img class="gas-slide" src="images/gas2.jpeg" alt="Gas service slide 2" />
+        <img class="gas-slide" src="images/gas3.jpeg" alt="Gas service slide 3" />
+        <img class="gas-slide" src="images/gas4.jpeg" alt="Gas service slide 4" />
+        <img class="gas-slide" src="images/gas5.jpeg" alt="Gas service slide 5" />
+        <img class="gas-slide" src="images/gas6.jpeg" alt="Gas service slide 6" />
+        <img class="gas-slide" src="images/gas1.jpeg" alt="Gas service slide 1" />
+        <img class="gas-slide" src="images/gas2.jpeg" alt="Gas service slide 2" />
+        <img class="gas-slide" src="images/gas3.jpeg" alt="Gas service slide 3" />
+        <img class="gas-slide" src="images/gas4.jpeg" alt="Gas service slide 4" />
+        <img class="gas-slide" src="images/gas5.jpeg" alt="Gas service slide 5" />
+        <img class="gas-slide" src="images/gas6.jpeg" alt="Gas service slide 6" />
+      </div>
+    </div>
     <div class="card-container" style="justify-content:center;">
       <div class="card" style="cursor:pointer;width:400px;height:250px;display:flex;align-items:center;justify-content:center;" id="btnSelectPNG">
         <h1 style="font-size:2rem;color:#0078d4;text-align:center;">🔵<br>PNG - Pipeline Gas</h1>
@@ -48,7 +64,6 @@
     <div class="card" style="cursor:pointer;" id="btnLpgDelivery"><h2>Delivery Issue</h2></div>
     <div class="card" style="cursor:pointer;" id="btnLpgOvercharge"><h2>Overcharging</h2></div>
     <div class="card" style="cursor:pointer;" id="btnLpgDefect"><h2>Cylinder Defect</h2></div>
-    <div class="card" style="cursor:pointer;" id="btnLpgEmerg"><h2 style="color:#d32f2f;">Emergency Leak</h2></div>
     <div class="card" style="cursor:pointer;" id="btnLpgSafety"><h2>Safety Tips</h2></div>
   </div>
   <div class="button-row"><button class="btn" id="backFromLpgMenu">Back</button></div>
@@ -128,13 +143,6 @@
   <div class="button-row"><button class="btn" id="submitLpgDefect">Submit</button><button class="btn" id="cancelLpgDefect">Cancel</button></div>
 </div>
 
-<div id="lpgEmergScreen" class="screen" style="display:none;padding:20px;text-align:center;">
-  <h2 style="color:#d32f2f;font-size:2rem;">GAS LEAK EMERGENCY</h2>
-  <p style="font-size:1.2rem;">Confirm to dispatch help</p>
-  <div class="button-row"><button class="btn sos" id="submitLpgEmerg" style="font-size:1.5rem;padding:30px;">CONFIRM</button></div>
-  <div class="button-row"><button class="btn" id="cancelLpgEmerg">Cancel</button></div>
-</div>
-
 <div id="lpgSafetyScreen" class="screen" style="display:none;padding:20px;">
   <h2>LPG Safety</h2>
   <div style="border:2px solid #0078d4;padding:15px;background:#f0f8ff;font-size:1.1rem;line-height:2;">
@@ -153,145 +161,6 @@
 
 <footer><div id="ticker">📢 PNG connections available now | 🚨 Helpline: 1906</div></footer>
 
-<script>
-function updateClock(){
-  const d = new Date();
-  const t = d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0') + ':' + d.getSeconds().toString().padStart(2,'0');
-  const dt = ('0' + d.getDate()).slice(-2) + '/' + ('0' + (d.getMonth()+1)).slice(-2) + '/' + d.getFullYear();
-  document.getElementById('dateTime').textContent = dt + ' ' + t;
-}
-setInterval(updateClock, 1000);
-updateClock();
-
-let idleTimer;
-function resetTimer(){
-  clearTimeout(idleTimer);
-  idleTimer = setTimeout(() => showScreen('mainMenu'), 60000);
-}
-
-function showScreen(id){
-  document.querySelectorAll('.screen, #mainMenu').forEach(e => e.style.display = 'none');
-  if(id) document.getElementById(id).style.display = 'block';
-  resetTimer();
-}
-
-document.getElementById('btnSelectPNG').onclick = () => showScreen('pngServiceMenu');
-document.getElementById('btnSelectLPG').onclick = () => showScreen('lpgServiceMenu');
-document.getElementById('backFromPngMenu').onclick = () => showScreen('mainMenu');
-document.getElementById('backFromLpgMenu').onclick = () => showScreen('mainMenu');
-
-document.getElementById('btnPngNew').onclick = () => showScreen('pngNewForm');
-document.getElementById('btnPngBill').onclick = () => showScreen('pngBillScreen');
-document.getElementById('btnPngMeter').onclick = () => {
-  document.getElementById('pngCompTitle').textContent = 'Meter Issue';
-  document.getElementById('pngCompType').value = 'Meter Issue';
-  showScreen('pngComplaintForm');
-};
-document.getElementById('btnPngLeakage').onclick = () => {
-  document.getElementById('pngCompTitle').textContent = 'Leakage Report';
-  document.getElementById('pngCompType').value = 'Leakage';
-  showScreen('pngComplaintForm');
-};
-document.getElementById('btnPngEmerg').onclick = () => showScreen('pngEmergScreen');
-document.getElementById('btnPngRemove').onclick = () => showScreen('pngRemoveForm');
-
-document.getElementById('btnLpgDelivery').onclick = () => showScreen('lpgDeliveryForm');
-document.getElementById('btnLpgOvercharge').onclick = () => showScreen('lpgOverchargeForm');
-document.getElementById('btnLpgDefect').onclick = () => showScreen('lpgDefectForm');
-document.getElementById('btnLpgEmerg').onclick = () => showScreen('lpgEmergScreen');
-document.getElementById('btnLpgSafety').onclick = () => showScreen('lpgSafetyScreen');
-
-document.getElementById('submitPngNew').onclick = () => {
-  if(!document.getElementById('pngName').value) return alert('Enter name');
-  const id = 'REQ' + Math.random().toString().slice(2,8);
-  document.getElementById('confirmMsg').textContent = 'Request ID: ' + id;
-  showScreen('confirmScreen');
-};
-document.getElementById('cancelPngNew').onclick = () => showScreen('pngServiceMenu');
-
-const pngInput = document.getElementById('pngConsInput');
-document.querySelectorAll('#pngBillScreen .num-pad button').forEach(b => {
-  b.onclick = () => {
-    const t = b.textContent;
-    if(t === 'C') pngInput.value = '';
-    else if(t === '·') pngInput.value = pngInput.value.slice(0,-1);
-    else pngInput.value += t;
-  };
-});
-
-document.getElementById('submitPngCons').onclick = () => {
-  if(!pngInput.value) return alert('Enter ID');
-  document.getElementById('pngBillArea').innerHTML = '<p>Amount: Rs.850</p><p>Status: Overdue</p>';
-  showScreen('pngBillDetails');
-};
-document.getElementById('cancelPngBill').onclick = () => showScreen('pngServiceMenu');
-document.getElementById('backPngDetails').onclick = () => showScreen('pngBillScreen');
-document.getElementById('proceedPngPay').onclick = () => showScreen('pngPayOptions');
-
-['pngQR','pngCard','pngAEPS'].forEach(id => {
-  document.getElementById(id).onclick = () => alert('Payment processing...');
-});
-
-document.getElementById('cancelPngPay').onclick = () => showScreen('pngServiceMenu');
-
-document.getElementById('submitPngComp').onclick = () => {
-  if(!document.getElementById('pngCompCons').value) return alert('Enter ID');
-  const id = 'CMP' + Math.random().toString().slice(2,8);
-  document.getElementById('confirmMsg').textContent = 'Complaint ID: ' + id;
-  showScreen('confirmScreen');
-};
-document.getElementById('cancelPngComp').onclick = () => showScreen('pngServiceMenu');
-
-document.getElementById('submitPngEmerg').onclick = () => {
-  document.getElementById('confirmMsg').textContent = 'Emergency reported. Help dispatching...';
-  showScreen('confirmScreen');
-};
-document.getElementById('cancelPngEmerg').onclick = () => showScreen('pngServiceMenu');
-
-document.getElementById('submitPngRemove').onclick = () => {
-  if(!document.getElementById('pngRemoveId').value) return alert('Enter ID');
-  const id = 'REQ' + Math.random().toString().slice(2,8);
-  document.getElementById('confirmMsg').textContent = 'Request ID: ' + id;
-  showScreen('confirmScreen');
-};
-document.getElementById('cancelPngRemove').onclick = () => showScreen('pngServiceMenu');
-
-document.getElementById('submitLpgDeliv').onclick = () => {
-  if(!document.getElementById('lpgDeliv').value) return alert('Enter #');
-  const id = 'CMP' + Math.random().toString().slice(2,8);
-  document.getElementById('confirmMsg').textContent = 'Complaint ID: ' + id;
-  showScreen('confirmScreen');
-};
-document.getElementById('cancelLpgDeliv').onclick = () => showScreen('lpgServiceMenu');
-
-document.getElementById('submitLpgOver').onclick = () => {
-  if(!document.getElementById('lpgOverNum').value) return alert('Enter #');
-  const id = 'CMP' + Math.random().toString().slice(2,8);
-  document.getElementById('confirmMsg').textContent = 'Complaint ID: ' + id;
-  showScreen('confirmScreen');
-};
-document.getElementById('cancelLpgOver').onclick = () => showScreen('lpgServiceMenu');
-
-document.getElementById('submitLpgDefect').onclick = () => {
-  if(!document.getElementById('lpgDefectNum').value) return alert('Enter #');
-  const id = 'REP' + Math.random().toString().slice(2,8);
-  document.getElementById('confirmMsg').textContent = 'Report ID: ' + id;
-  showScreen('confirmScreen');
-};
-document.getElementById('cancelLpgDefect').onclick = () => showScreen('lpgServiceMenu');
-
-document.getElementById('submitLpgEmerg').onclick = () => {
-  document.getElementById('confirmMsg').textContent = 'EMERGENCY RECORDED. Help dispatching now. Call 1906.';
-  showScreen('confirmScreen');
-};
-document.getElementById('cancelLpgEmerg').onclick = () => showScreen('lpgServiceMenu');
-
-document.getElementById('backFromSafety').onclick = () => showScreen('lpgServiceMenu');
-document.getElementById('backFromConfirm').onclick = () => showScreen('mainMenu');
-
-['click','touchstart'].forEach(e => document.addEventListener(e, resetTimer));
-resetTimer();
-showScreen('mainMenu');
-</script>
+<script src="gas.js"></script>
 </body>
 </html>
